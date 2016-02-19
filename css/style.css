@@ -317,6 +317,18 @@ a.learn_more2:hover{
 .service_icon.icon3{
 	border:2px solid #49b5e7;
 	}
+
+.service_icon.icon4{
+	border:2px solid #191970;
+	}
+
+.service_icon.icon5{
+	border:2px solid #dc143c;
+	}    
+    
+.service_icon.icon6{
+	border:2px solid #008080;
+	}
 	
 .service_icon span {
     background:#f56eab;
@@ -331,7 +343,19 @@ a.learn_more2:hover{
 }
 .service_icon.icon3 span{
     background:#49b5e7;
-	}
+}
+
+.service_icon.icon4 span {
+    background:#191970;
+}
+.service_icon.icon5 span{
+    background:#dc143c;
+}
+
+.service_icon.icon6 span{
+    background:#008080;
+	}    
+    
 .service_icon i{
 	color: #fff;
     font-size: 40px;
