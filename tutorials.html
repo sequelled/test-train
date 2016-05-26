@@ -98,34 +98,26 @@ function resizeText() {
 
 
 
-<section id="work_outer"><!--main-section-start-->
-<div class="container">
-    <h2>Maintenance</h2>
+<section class="main-section" id="client_outer"><!--main-section client-part-start-->
+  <h2>Tutorials</h2>
+  <div class="client_area ">
+    <div class="client_section animated  fadeInUp wow">
+      <div class="client_profile">
+        <div class="client_profile_pic"><img src="img/maritime.jpg" alt=""></div>
+        <h3><a href="window_function.html">Window Functions</a></h3>
+        </div>
+      <div class="quote_section">
+        <div class="quote_arrow"></div>
+        <p><b><img src="img/quote_sign_left.png" alt=""></b> Window functions are a set of functions that works on a portion of the table that you can define, and it calculates some expressions on each row of that portion based on its current row. <small><img src="img/quote_sign_right.png" alt=""></small> </p>
+      </div>
+      <div class="clear"></div>
     </div>
+    <br>
+    <br>
+    <br>
   </div>
 </section>
-<!--main-section-end--> 
-
-<!--Service-->
-<section  id="service">
-  <div class="container">
-    <p>  All databases require routine maintenance work to ensure that it is running with optimum performance. This includes routinely vacuuming the database, dropping and re-creating indexes, tuning up postgresql.conf server parameters, checking disk space and I/O etc.  
-    </p>
-    <br>
-    <p>
-    We also create backup servers that runs in warm or hot standby mode, so that in case of a failure in the main server, the standby server can be switched to work as the main server in minutes. This saves from the catastrophic scenario of losing invaluable data, as well as costly downtime for clients and vendors that can persist for hours or even days. 
-    </p>
-    <br>
-    <p>
-    Running a standby server in hot standby mode also means it can run in "read only" mode while the main server works in "read/write" mode, taking the load of some read only queries off the main server, thus achieve load balancing. 
-    </p>
-    <br>
-    <p>
-     We also upgrade the existing PostgreSQL cluster to the latest <a href="http://www.postgresql.org/docs/9.5/static/release-9-5.html">9.5</a> version to take advantage of all the new features. We back up the existing cluster before migrating to the new cluster. 
-    </p>
-  </div>
-</section>
-<!--Service-->
+<!--main-section client-part-end-->
 
 
 
@@ -201,10 +193,6 @@ function resizeText() {
     -->
   </div>
 </footer>
-
-
-
-
 
 <script type="text/javascript">
     $(document).ready(function(e) {

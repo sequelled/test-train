@@ -1,0 +1,760 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, maximum-scale=1">
+<title>sequelled</title>
+<link rel="icon" href="favicon.png" type="image/png">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="css/linecons.css" rel="stylesheet" type="text/css">
+<link href="css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="css/responsive.css" rel="stylesheet" type="text/css">
+<link href="css/animate.css" rel="stylesheet" type="text/css">
+
+<link href='http://fonts.googleapis.com/css?family=Lato:400,900,700,700italic,400italic,300italic,300,100italic,100,900italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Dosis:400,500,700,800,600,300,200' rel='stylesheet' type='text/css'>
+
+<!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
+
+<script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.isotope.js"></script>
+<script type="text/javascript" src="js/wow.js"></script>
+<script type="text/javascript" src="js/classie.js"></script>
+
+<!--[if lt IE 9]>
+    <script src="js/respond-1.1.0.min.js"></script>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/html5element.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+	$(document).ready(function(e) {
+        $('.res-nav_click').click(function(){
+		$('ul.toggle').slideToggle(600)	
+			});	
+			
+	$(document).ready(function() {
+$(window).bind('scroll', function() {
+         if ($(window).scrollTop() > 0) {
+             $('#header_outer').addClass('fixed');
+         }
+         else {
+             $('#header_outer').removeClass('fixed');
+         }
+    });
+	
+	  });
+	  
+
+		    });	
+function resizeText() {
+	var preferredWidth = 767;
+	var displayWidth = window.innerWidth;
+	var percentage = displayWidth / preferredWidth;
+	var fontsizetitle = 25;
+	var newFontSizeTitle = Math.floor(fontsizetitle * percentage);
+	$(".divclass").css("font-size", newFontSizeTitle)
+}
+</script>
+</head>
+<body>
+
+<!--Header_section-->
+<header id="header_outer">
+  <div class="container">
+    <div class="header_section">
+      <div class="logo"><a href="index.html"><img src="img/logob.png" alt=""></a></div>
+      <nav class="nav" id="nav">
+        <ul class="toggle">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="design.html">Design</a></li>
+          <li><a href="optimize.html">Optimize</a></li>
+          <li><a href="maintain.html">Maintenance</a></li>
+          <li><a href="latest.html">Latest Work</a></li>
+          <li><a href="tutorials.html">Tutorials</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <ul class="">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="design.html">Design</a></li>
+          <li><a href="optimize.html">Optimize</a></li>
+          <li><a href="maintain.html">Maintenance</a></li>
+          <li><a href="latest.html">Latest Work</a></li>
+          <li><a href="tutorials.html">Tutorials</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="res-nav_click animated wobble wow"  href="javascript:void(0)"><i class="fa-bars"></i></a> </div>
+  </div>
+</header>
+<!--Header_section--> 
+
+
+
+
+<section id="window_function"><!--main-section-start-->
+<div class="container">
+    <h2>Window Functions</h2>
+    </div>
+  </div>
+</section>
+<!--main-section-end--> 
+
+<!--Service-->
+<section  id="service">
+  <div class="container">
+    <p><a href="https://www.postgresql.org/docs/9.5/static/tutorial-window.html">Window functions</a> are a set of functions that works on a portion of the table that you can define, and it calculates some expressions on each row of that portion based on its current row. But unlike the aggregate functions, the output of the window function still retains all its rows and do not collapse into a single row. This is a really cool feature similar to Analytic Functions in Oracle or Window function in SQL server.
+    </p>
+    <br>
+    <p>
+    The basic structure of the Window function is as below:
+    </p>
+    <pre><code>select
+    ....
+    ....
+    window_function() over (defined_window)
+from
+    table</code></pre>
+    <br>
+    <p>It is also possible to define a common window, which is useful if you are using the same window for several functions:</p>
+    <pre><code>select 
+    ...
+    ...
+    window_function_1() over w,
+    window_function_2() over w
+from
+    table
+window
+    w as (defined_window)</code></pre>
+    <br>
+    <p>Let us look at some examples which will make it easier to understand the concept. But first, let us create a table which we will use to analyze the window function. Suppose it is called 'salary' which logs employee salary of all departments in a company for each month. It stores the pseudo id. employee name, department, year, month and salary. </p>
+    <br>
+    <pre><code>create table public.salary
+    ( id_salary bigserial,
+      str_employee_name text,
+      str_department text,
+      str_year text,
+      str_month text,
+      num_salary numeric
+    );</code></pre>
+    
+    <br>
+    <p>Now let's add some data into the table.</p>
+    <pre><code>insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Stephen','Administration','2016','Jan','8000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Justin','HR','2016','Jan','7000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Paul','Purchasing','2016','Jan','7500');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Jean','Research','2016','Jan','8000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Kim','Marketing','2016','Jan','9000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Brian','Production','2016','Jan','8000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Pierre','HR','2016','Jan','7500');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Joe','Administration','2016','Jan','6000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('William','Administration','2016','Jan','6500');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Arthur','Administration','2016','Jan','7300');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Stephen','Administration','2016','Feb','8500');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Justin','HR','2016','Feb','7500');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Paul','Purchasing','2016','Feb','7000');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Jean','Research','2016','Feb','8200');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Kim','Marketing','2016','Feb','9300');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Brian','Production','2016','Feb','8100');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Pierre','HR','2016','Feb','7600');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Joe','Administration','2016','Feb','6200');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('William','Administration','2016','Feb','6400');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Stephen','Administration','2016','Mar','8100');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Justin','HR','2016','Mar','7200');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Paul','Purchasing','2016','Mar','7600');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Jean','Research','2016','Mar','8100');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Kim','Marketing','2016','Mar','9200');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Brian','Production','2016','Mar','8100');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Pierre','HR','2016','Mar','7600');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Joe','Administration','2016','Mar','6100');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('William','Administration','2016','Mar','6150');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Arthur','Administration','2016','Mar','7050');
+insert into public.salary (str_employee_name, str_department, str_year, str_month, num_salary) values ('Arthur','Administration','2016','Feb','6400');</code></pre>
+
+    <br>
+    <p>Now let's look at some of the window functions. Suppose we want to find the average salary of the employees for each department, for each month. We can do so by breaking down the table into windows separated by department & month and using the avg() function. It will find the average by each window instead of finding average for the whole table. </p>
+    <pre><code>select 
+    str_employee_name,
+    str_department,
+    str_year,
+    str_month,
+    num_salary,
+    avg(num_salary) over (w) as "avg_salary_by_dept_by_month"
+from
+    public.salary
+window
+    w as (partition by str_department, str_month)
+order by
+    str_employee_name</code></pre>
+
+    <pre><code> str_employee_name | str_department | str_year | str_month | num_salary | avg_salary_by_dept_by_month
+-------------------+----------------+----------+-----------+------------+-----------------------------
+ Arthur            | Administration | 2016     | Jan       |       7300 |       6950.0000000000000000
+ Arthur            | Administration | 2016     | Feb       |       6400 |       6875.0000000000000000
+ Arthur            | Administration | 2016     | Mar       |       7050 |       6850.0000000000000000
+ Brian             | Production     | 2016     | Feb       |       8100 |       8100.0000000000000000
+ Brian             | Production     | 2016     | Mar       |       8100 |       8100.0000000000000000
+ Brian             | Production     | 2016     | Jan       |       8000 |       8000.0000000000000000
+ Jean              | Research       | 2016     | Feb       |       8200 |       8200.0000000000000000
+ Jean              | Research       | 2016     | Mar       |       8100 |       8100.0000000000000000
+ Jean              | Research       | 2016     | Jan       |       8000 |       8000.0000000000000000
+ Joe               | Administration | 2016     | Feb       |       6200 |       6875.0000000000000000
+ Joe               | Administration | 2016     | Mar       |       6100 |       6850.0000000000000000
+ Joe               | Administration | 2016     | Jan       |       6000 |       6950.0000000000000000
+ Justin            | HR             | 2016     | Jan       |       7000 |       7250.0000000000000000
+ Justin            | HR             | 2016     | Feb       |       7500 |       7550.0000000000000000
+ Justin            | HR             | 2016     | Mar       |       7200 |       7400.0000000000000000
+ Kim               | Marketing      | 2016     | Feb       |       9300 |       9300.0000000000000000
+ Kim               | Marketing      | 2016     | Jan       |       9000 |       9000.0000000000000000
+ Kim               | Marketing      | 2016     | Mar       |       9200 |       9200.0000000000000000
+ Paul              | Purchasing     | 2016     | Mar       |       7600 |       7600.0000000000000000
+ Paul              | Purchasing     | 2016     | Jan       |       7500 |       7500.0000000000000000
+ Paul              | Purchasing     | 2016     | Feb       |       7000 |       7000.0000000000000000
+ Pierre            | HR             | 2016     | Feb       |       7600 |       7550.0000000000000000
+ Pierre            | HR             | 2016     | Jan       |       7500 |       7250.0000000000000000
+ Pierre            | HR             | 2016     | Mar       |       7600 |       7400.0000000000000000
+ Stephen           | Administration | 2016     | Mar       |       8100 |       6850.0000000000000000
+ Stephen           | Administration | 2016     | Feb       |       8500 |       6875.0000000000000000
+ Stephen           | Administration | 2016     | Jan       |       8000 |       6950.0000000000000000
+ William           | Administration | 2016     | Jan       |       6500 |       6950.0000000000000000
+ William           | Administration | 2016     | Feb       |       6400 |       6875.0000000000000000
+ William           | Administration | 2016     | Mar       |       6150 |       6850.0000000000000000
+(30 rows)</code></pre>
+    
+    <br>
+    
+    <p>This is a simple example of the window function. Now let's look at the use of several other window functions. 
+    <br> 
+    <br>
+    <b>Ranking Functions: </b>
+    <br>
+    rank(), row_number(), dense_rank(), percent_rank(), cume_dist()
+    <br>
+    <br>
+    There are 5 types of ranking functions in PostgreSQL: rank(), row_number(), dense_rank(), percent_rank() and cume_dist(). We can use rank to find some interesting results, for example if we rank the salary in descending order, and then create a query to select anyone with rank equal to 1, we can easily find who is the top salaried employee in each department for each month. 
+    </p>
+    
+    <pre><code>with ranked_salary as 
+    (select 
+        str_employee_name,
+        str_department,
+        str_year,
+        str_month,
+        num_salary,
+        rank() over (w)
+    from
+        public.salary
+    window
+        w as (partition by str_department, str_month order by num_salary desc)
+    order by
+        str_department, str_month, rank asc)
+select 
+    *
+from
+    ranked_salary
+where 
+    rank = 1;</code></pre>
+    
+    <pre><code> str_employee_name | str_department | str_year | str_month | num_salary | rank
+-------------------+----------------+----------+-----------+------------+------
+ Stephen           | Administration | 2016     | Feb       |       8500 |    1
+ Stephen           | Administration | 2016     | Jan       |       8000 |    1
+ Stephen           | Administration | 2016     | Mar       |       8100 |    1
+ Pierre            | HR             | 2016     | Feb       |       7600 |    1
+ Pierre            | HR             | 2016     | Jan       |       7500 |    1
+ Pierre            | HR             | 2016     | Mar       |       7600 |    1
+ Kim               | Marketing      | 2016     | Feb       |       9300 |    1
+ Kim               | Marketing      | 2016     | Jan       |       9000 |    1
+ Kim               | Marketing      | 2016     | Mar       |       9200 |    1
+ Brian             | Production     | 2016     | Feb       |       8100 |    1
+ Brian             | Production     | 2016     | Jan       |       8000 |    1
+ Brian             | Production     | 2016     | Mar       |       8100 |    1
+ Paul              | Purchasing     | 2016     | Feb       |       7000 |    1
+ Paul              | Purchasing     | 2016     | Jan       |       7500 |    1
+ Paul              | Purchasing     | 2016     | Mar       |       7600 |    1
+ Jean              | Research       | 2016     | Feb       |       8200 |    1
+ Jean              | Research       | 2016     | Jan       |       8000 |    1
+ Jean              | Research       | 2016     | Mar       |       8100 |    1
+(18 rows)</code></pre>
+
+<br>
+
+<p>There are subtle differences how the ranking functions work:
+<br>
+<br>
+<b>row_number()</b>: It attributes a position number based on a particular window and ordering, if two rows have the same value, it will arbitarily assign a number among them. 
+<br>
+<br>
+<b>rank()</b>: It attributes a position number based on a particular window and ordering, if two rows have the same value, it will give them the same rank, and a gap will appear in the next rank. 
+<br>
+<br>
+<b>dense_rank()</b>: It attributes a position number based on a particular window and ordering, if two rows have the same value, it will give them the same rank, but there will be no gap and the next row will continue with the next rank.
+<br>
+<br>
+<b>percent_rank()</b>: It works similar to rank(), i.e. there is a gap if there is the same value in more than one row, but instead of assigning a bigint, it assigns the first row as 0 and last row as 1, and all other rows in terms of relative rank of the current row: relative rank = (rank - 1)/(total_rows - 1);
+<br>
+<br>
+<b>cume_dist()</b>: It finds how many rows has the same or higher value than the current row, the range is between 0 < cume_dist <= 1. The cume dist of current row = (number of rows less than or equal to current row's rank) / (total_rows)
+
+<br>
+<br>
+
+Let's look at an example where we rank all employees in terms of their salary for each department and month. Please observe the differences in the ranking functions. 
+
+
+</p>
+
+<pre><code>select 
+    str_employee_name,
+    str_department,
+    str_year,
+    str_month,
+    num_salary,
+    row_number() over (w),
+    rank() over (w),
+    dense_rank() over (w),
+    percent_rank() over (w),
+    cume_dist() over (w)
+from
+    public.salary
+window
+    w as (partition by str_department, str_month order by num_salary desc)
+order by
+    str_department, str_month, rank asc;</code></pre>
+    
+<pre><code> str_employee_name | str_department | str_year | str_month | num_salary | row_number | rank | dense_rank |   percent_rank    | cume_dist
+-------------------+----------------+----------+-----------+------------+------------+------+------------+-------------------+-----------
+ Stephen           | Administration | 2016     | Feb       |       8500 |          1 |    1 |          1 |                 0 |      0.25
+ Arthur            | Administration | 2016     | Feb       |       6400 |          2 |    2 |          2 | 0.333333333333333 |      0.75
+ William           | Administration | 2016     | Feb       |       6400 |          3 |    2 |          2 | 0.333333333333333 |      0.75
+ Joe               | Administration | 2016     | Feb       |       6200 |          4 |    4 |          3 |                 1 |         1
+ Stephen           | Administration | 2016     | Jan       |       8000 |          1 |    1 |          1 |                 0 |      0.25
+ Arthur            | Administration | 2016     | Jan       |       7300 |          2 |    2 |          2 | 0.333333333333333 |       0.5
+ William           | Administration | 2016     | Jan       |       6500 |          3 |    3 |          3 | 0.666666666666667 |      0.75
+ Joe               | Administration | 2016     | Jan       |       6000 |          4 |    4 |          4 |                 1 |         1
+ Stephen           | Administration | 2016     | Mar       |       8100 |          1 |    1 |          1 |                 0 |      0.25
+ Arthur            | Administration | 2016     | Mar       |       7050 |          2 |    2 |          2 | 0.333333333333333 |       0.5
+ William           | Administration | 2016     | Mar       |       6150 |          3 |    3 |          3 | 0.666666666666667 |      0.75
+ Joe               | Administration | 2016     | Mar       |       6100 |          4 |    4 |          4 |                 1 |         1
+ Pierre            | HR             | 2016     | Feb       |       7600 |          1 |    1 |          1 |                 0 |       0.5
+ Justin            | HR             | 2016     | Feb       |       7500 |          2 |    2 |          2 |                 1 |         1
+ Pierre            | HR             | 2016     | Jan       |       7500 |          1 |    1 |          1 |                 0 |       0.5
+ Justin            | HR             | 2016     | Jan       |       7000 |          2 |    2 |          2 |                 1 |         1
+ Pierre            | HR             | 2016     | Mar       |       7600 |          1 |    1 |          1 |                 0 |       0.5
+ Justin            | HR             | 2016     | Mar       |       7200 |          2 |    2 |          2 |                 1 |         1
+ Kim               | Marketing      | 2016     | Feb       |       9300 |          1 |    1 |          1 |                 0 |         1
+ Kim               | Marketing      | 2016     | Jan       |       9000 |          1 |    1 |          1 |                 0 |         1
+ Kim               | Marketing      | 2016     | Mar       |       9200 |          1 |    1 |          1 |                 0 |         1
+ Brian             | Production     | 2016     | Feb       |       8100 |          1 |    1 |          1 |                 0 |         1
+ Brian             | Production     | 2016     | Jan       |       8000 |          1 |    1 |          1 |                 0 |         1
+ Brian             | Production     | 2016     | Mar       |       8100 |          1 |    1 |          1 |                 0 |         1
+ Paul              | Purchasing     | 2016     | Feb       |       7000 |          1 |    1 |          1 |                 0 |         1
+ Paul              | Purchasing     | 2016     | Jan       |       7500 |          1 |    1 |          1 |                 0 |         1
+ Paul              | Purchasing     | 2016     | Mar       |       7600 |          1 |    1 |          1 |                 0 |         1
+ Jean              | Research       | 2016     | Feb       |       8200 |          1 |    1 |          1 |                 0 |         1
+ Jean              | Research       | 2016     | Jan       |       8000 |          1 |    1 |          1 |                 0 |         1
+ Jean              | Research       | 2016     | Mar       |       8100 |          1 |    1 |          1 |                 0 |         1
+(30 rows)</code></pre>
+
+
+<p>Function to segment the window: ntile(n)
+ntile(n): this function segments the window into n-portions and assigns a number for each portion. 
+<br>
+<br>
+Let's look at an example where we want to segment each department into two segments, the higher salaried and the lower salaried segment for each month.
+</p>
+<pre><code>select 
+    str_employee_name,
+    str_department,
+    str_year,
+    str_month,
+    num_salary,
+    ntile(2) over (partition by str_department, str_month order by num_salary desc)
+from
+    public.salary
+order by
+    str_department, str_month asc;</code></pre>
+
+<pre><code> str_employee_name | str_department | str_year | str_month | num_salary | ntile
+-------------------+----------------+----------+-----------+------------+-------
+ Stephen           | Administration | 2016     | Feb       |       8500 |     1
+ Arthur            | Administration | 2016     | Feb       |       6400 |     1
+ William           | Administration | 2016     | Feb       |       6400 |     2
+ Joe               | Administration | 2016     | Feb       |       6200 |     2
+ Stephen           | Administration | 2016     | Jan       |       8000 |     1
+ Arthur            | Administration | 2016     | Jan       |       7300 |     1
+ William           | Administration | 2016     | Jan       |       6500 |     2
+ Joe               | Administration | 2016     | Jan       |       6000 |     2
+ Stephen           | Administration | 2016     | Mar       |       8100 |     1
+ Arthur            | Administration | 2016     | Mar       |       7050 |     1
+ William           | Administration | 2016     | Mar       |       6150 |     2
+ Joe               | Administration | 2016     | Mar       |       6100 |     2
+ Pierre            | HR             | 2016     | Feb       |       7600 |     1
+ Justin            | HR             | 2016     | Feb       |       7500 |     2
+ Pierre            | HR             | 2016     | Jan       |       7500 |     1
+ Justin            | HR             | 2016     | Jan       |       7000 |     2
+ Pierre            | HR             | 2016     | Mar       |       7600 |     1
+ Justin            | HR             | 2016     | Mar       |       7200 |     2
+ Kim               | Marketing      | 2016     | Feb       |       9300 |     1
+ Kim               | Marketing      | 2016     | Jan       |       9000 |     1
+ Kim               | Marketing      | 2016     | Mar       |       9200 |     1
+ Brian             | Production     | 2016     | Feb       |       8100 |     1
+ Brian             | Production     | 2016     | Jan       |       8000 |     1
+ Brian             | Production     | 2016     | Mar       |       8100 |     1
+ Paul              | Purchasing     | 2016     | Feb       |       7000 |     1
+ Paul              | Purchasing     | 2016     | Jan       |       7500 |     1
+ Paul              | Purchasing     | 2016     | Mar       |       7600 |     1
+ Jean              | Research       | 2016     | Feb       |       8200 |     1
+ Jean              | Research       | 2016     | Jan       |       8000 |     1
+ Jean              | Research       | 2016     | Mar       |       8100 |     1
+(30 rows)
+</code></pre>
+    
+<br>
+
+<p>
+<b>Window functions for comparison based on value or position of the row:</b>
+<br>
+lag(), lead(), first_value(), last_value(), nth_value()
+<br>
+<br>
+lag(column, offset): it finds the value of the column of the previous row, which appeared from offset row before the current row. 
+<br>
+<br>
+lead(column, offset): it finds the value of the column of the following row, which appears from offset row after the current row. 
+<br>
+<br>
+first_value(column): it returns the value of the column, that is on the first row of the window frame
+<br>
+<br>
+last_value(column): it returns the value of the column, that is on the last row of the window frame
+<br>
+<br>
+nth_value(column): it returns the value of the column, that is the nth row of the window frame, starting from 1 (gives null if no such row)
+<br>
+<br>
+<b>**An important thing to remember, if the frame is not explicitly specified, the default window frame is between rows from 'unbounded preceding' (any rows that appeared before the current_row) and 'current_row'. 
+Therefore for functions like last_value() and nth_value(), the first row never checks for the rows that comes after it, therefore the last_value and nth_value result might be unexpected (and wrong). For these functions you will need to explicitly define the range to include the preceding and following rows.</b>
+<br>
+<br>
+To define the range you need to state the frame_start and frame_end, which can have the following options: unbounded preceding, value preceding, current row, value following, and unbounded following. 
+<br>
+Having a range 'unbound preceding' and 'unbounded following' means that the frame starts with the first row of the partition and ends with the last row of partitions. 
+<br>
+<br>
+For example, we can find the employees' salaries, their immediate higher and lower salaries for another employee in the department, and the highest and lowest salary for each department for the month of February with the following query:
+<pre><code>select 
+    str_employee_name,
+    str_department,
+    str_year,
+    str_month,
+    rank() over (partition by str_department, str_month order by num_salary desc),
+    num_salary,
+    lag(num_salary, 1) over (partition by str_department order by num_salary desc) as "lag", -- provides salary of the previous row
+    lead(num_salary, 1) over (partition by str_department order by num_salary desc) as "lead", -- provides salary of the following row
+    first_value(num_salary) over (partition by str_department order by num_salary desc) as "first_value", -- provides highest salary
+    last_value(num_salary) over (partition by str_department order by num_salary desc) as "last_value (incorrect)", -- provides lowest salary - except it is incorrect as range not specified
+    last_value(num_salary) over (partition by str_department order by num_salary desc range between unbounded preceding and unbounded following) as "last_value", -- provides lowest salary which is correct
+    nth_value(num_salary, 3) over (partition by str_department order by num_salary desc range between unbounded preceding and unbounded following) as "nth_value" -- provides salary of nth_row starting from the top of window
+from
+    public.salary
+where
+    str_month = 'Feb';</code></pre>
+    
+<code><pre> str_employee_name | str_department | str_year | str_month | rank | num_salary | lag  | lead | first_value | last_value (incorrect) | last_value | nth_value
+-------------------+----------------+----------+-----------+------+------------+------+------+-------------+------------------------+------------+-----------
+ Stephen           | Administration | 2016     | Feb       |    1 |       8500 |      | 6400 |        8500 |                   8500 |       6200 |      6400
+ Arthur            | Administration | 2016     | Feb       |    2 |       6400 | 8500 | 6400 |        8500 |                   6400 |       6200 |      6400
+ William           | Administration | 2016     | Feb       |    2 |       6400 | 6400 | 6200 |        8500 |                   6400 |       6200 |      6400
+ Joe               | Administration | 2016     | Feb       |    4 |       6200 | 6400 |      |        8500 |                   6200 |       6200 |      6400
+ Pierre            | HR             | 2016     | Feb       |    1 |       7600 |      | 7500 |        7600 |                   7600 |       7500 |
+ Justin            | HR             | 2016     | Feb       |    2 |       7500 | 7600 |      |        7600 |                   7500 |       7500 |
+ Kim               | Marketing      | 2016     | Feb       |    1 |       9300 |      |      |        9300 |                   9300 |       9300 |
+ Brian             | Production     | 2016     | Feb       |    1 |       8100 |      |      |        8100 |                   8100 |       8100 |
+ Paul              | Purchasing     | 2016     | Feb       |    1 |       7000 |      |      |        7000 |                   7000 |       7000 |
+ Jean              | Research       | 2016     | Feb       |    1 |       8200 |      |      |        8200 |                   8200 |       8200 |
+(10 rows)</pre></code>
+
+
+
+</p>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+  
+<div style="display: none; height: 100px;">Tag: PostgreSQL 9.1, PostgreSQL 9.2, PostgreSQL 9.3, PostgreSQL 9.4, PostgreSQL 9.5, database, SQL, Window Functions, Window Functions, Window Functions, Window Functions, Window Functions, lag(), lead(), first_value(), last_value(), nth_value(), rank(), row_number(), dense_rank(), percent_rank(), cume_dist() </div>  
+  
+</section>
+<!--Service-->
+
+
+
+
+
+
+
+<footer class="footer_section" id="contact">
+  <div class="container">
+    <section class="main-section contact" id="contact">
+      <div class="contact_section">
+        <h2>Contact Us</h2>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="contact_block">
+              <div class="contact_block_icon rollIn animated wow"><span><i class="fa-home"></i></span></div>
+              <span> 420 Voyaguer Dr, <br>
+              Prince George, BC V2M 4P2<br> Canada </span> </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="contact_block">
+              <div class="contact_block_icon icon2 rollIn animated wow"><span><i class="fa-phone"></i></span></div>
+              <span> 1 604 787 1757 </span> </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="contact_block">
+              <div class="contact_block_icon icon3 rollIn animated wow"><span><i class="fa-pencil"></i></span></div>
+              <span> <a href="mailto:info@sequelled.com"> info@sequelled.com</a> </span> </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 wow fadeInLeft">
+          <div class="contact-info-box address clearfix">
+            <h3>Don’t be shy. Say hello!</h3>
+            <p>Please feel free to contact us to discuss how we can solve your needs regarding PostgreSQL databases and get a free quote.</p>
+            
+          </div>
+          <ul class="social-link">
+            <li class="twitter animated bounceIn wow delay-02s"><a href="javascript:void(0)"><i class="fa-twitter"></i></a></li>
+            <li class="facebook animated bounceIn wow delay-03s"><a href="javascript:void(0)"><i class="fa-facebook"></i></a></li>
+            <li class="pinterest animated bounceIn wow delay-04s"><a href="javascript:void(0)"><i class="fa-pinterest"></i></a></li>
+            <li class="gplus animated bounceIn wow delay-05s"><a href="javascript:void(0)"><i class="fa-google-plus"></i></a></li>
+            <li class="dribbble animated bounceIn wow delay-06s"><a href="javascript:void(0)"><i class="fa-dribbble"></i></a></li>
+          </ul>
+        </div>
+        <div class="col-lg-6 wow fadeInUp delay-06s">
+       
+          <form id="contactform" method="POST">
+            <input class="input-text animated wow flipInY delay-02s" type="text" name="name" placeholder="Your name *">
+            <input class="input-text animated wow flipInY delay-02s" type="email" name="_replyto" placeholder="Your email *">
+            <input type="hidden" name="_subject" value="Website contact" />
+            <textarea class="input-text text-area animated wow flipInY delay-06s" name="message" placeholder="Your message *"></textarea>
+            <input type="text" name="_gotcha" style="display:none" />
+            <input class="input-btn animated wow flipInY delay-08s" type="submit" value="Send">
+            <input type="hidden" name="_next" value="//sequelled.com#contact" />
+        </form>
+        <script>
+            var contactform =  document.getElementById('contactform');
+            contactform.setAttribute('action', '//formspree.io/' + 'info' + '@' + 'sequelled' + '.' + 'com');
+        </script>
+          
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="container">
+    <div class="footer_bottom"> <span>Copyright © 2016 sequelled.com | <a href="http://bootstraptaste.com/"> BootstrapTaste </a></span> </div>
+    <!-- 
+        All links in the footer should remain intact. 
+        Licenseing information is available at: http://bootstraptaste.com/license/
+        You can buy this theme without footer links online at: http://bootstraptaste.com/buy/?theme=Butterfly
+    -->
+  </div>
+</footer>
+
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        $('#header_outer').scrollToFixed();
+        $('.res-nav_click').click(function(){
+            $('.main-nav').slideToggle();
+            return false    
+            
+        });
+        
+    });
+</script> 
+<script>
+    wow = new WOW(
+      {
+        animateClass: 'animated',
+        offset:       100
+      }
+    );
+    wow.init();
+    document.getElementById('').onclick = function() {
+      var section = document.createElement('section');
+      section.className = 'wow fadeInDown';
+	  section.className = 'wow shake';
+	  section.className = 'wow zoomIn';
+	  section.className = 'wow lightSpeedIn';
+      this.parentNode.insertBefore(section, this);
+    };
+  </script> 
+<script type="text/javascript">
+	$(window).load(function(){
+		
+		$('a').bind('click',function(event){
+			var $anchor = $(this);
+			
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top - 91
+			}, 1500,'easeInOutExpo');
+			/*
+			if you don't want to use the easing effects:
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top
+			}, 1000);
+			*/
+			event.preventDefault();
+		});
+	})
+</script> 
+
+<!--<script type="text/javascript">
+
+$(window).load(function(){
+  
+  
+  var $container = $('.portfolioContainer'),
+      $body = $('body'),
+      colW = 350,
+      columns = null;
+
+  
+  $container.isotope({
+    // disable window resizing
+    resizable: true,
+    masonry: {
+      columnWidth: colW
+    }
+  });
+  
+  $(window).smartresize(function(){
+    // check if columns has changed
+    var currentColumns = Math.floor( ( $body.width() -30 ) / colW );
+    if ( currentColumns !== columns ) {
+      // set new column count
+      columns = currentColumns;
+      // apply width to container manually, then trigger relayout
+      $container.width( columns * colW )
+        .isotope('reLayout');
+    }
+    
+  }).smartresize(); // trigger resize to set container width
+  $('.portfolioFilter a').click(function(){
+        $('.portfolioFilter .current').removeClass('current');
+        $(this).addClass('current');
+ 
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+			
+            filter: selector,
+         });
+         return false;
+    });
+  
+});
+
+</script>
+
+
+--> 
+
+<script type="text/javascript">
+
+   
+  jQuery(document).ready(function($){     
+// Portfolio Isotope
+	var container = $('#portfolio-wrap');	
+	
+
+	container.isotope({
+		animationEngine : 'best-available',
+	  	animationOptions: {
+	     	duration: 200,
+	     	queue: false
+	   	},
+		layoutMode: 'fitRows'
+	});	
+
+	$('#filters a').click(function(){
+		$('#filters a').removeClass('active');
+		$(this).addClass('active');
+		var selector = $(this).attr('data-filter');
+	  	container.isotope({ filter: selector });
+        setProjects();		
+	  	return false;
+	});
+		
+		
+		function splitColumns() { 
+			var winWidth = $(window).width(), 
+				columnNumb = 1;
+			
+			
+			if (winWidth > 1024) {
+				columnNumb = 4;
+			} else if (winWidth > 900) {
+				columnNumb = 2;
+			} else if (winWidth > 479) {
+				columnNumb = 2;
+			} else if (winWidth < 479) {
+				columnNumb = 1;
+			}
+			
+			return columnNumb;
+		}		
+		
+		function setColumns() { 
+			var winWidth = $(window).width(), 
+				columnNumb = splitColumns(), 
+				postWidth = Math.floor(winWidth / columnNumb);
+			
+			container.find('.portfolio-item').each(function () { 
+				$(this).css( { 
+					width : postWidth + 'px' 
+				});
+			});
+		}		
+		
+		function setProjects() { 
+			setColumns();
+			container.isotope('reLayout');
+		}		
+		
+		container.imagesLoaded(function () { 
+			setColumns();
+		});
+		
+	
+		$(window).bind('resize', function () { 
+			setProjects();			
+		});
+
+});
+$( window ).load(function() {
+	jQuery('#all').click();
+	return false;
+});
+</script>
+</body>
+</html>
