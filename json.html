@@ -1,0 +1,980 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, maximum-scale=1">
+<title>sequelled</title>
+<link rel="icon" href="favicon.png" type="image/png">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="css/linecons.css" rel="stylesheet" type="text/css">
+<link href="css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="css/responsive.css" rel="stylesheet" type="text/css">
+<link href="css/animate.css" rel="stylesheet" type="text/css">
+<link href="css/sequelled.css" rel="stylesheet" type="text/css">
+
+<link href='http://fonts.googleapis.com/css?family=Lato:400,900,700,700italic,400italic,300italic,300,100italic,100,900italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Dosis:400,500,700,800,600,300,200' rel='stylesheet' type='text/css'>
+
+<!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
+
+<script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.isotope.js"></script>
+<script type="text/javascript" src="js/wow.js"></script>
+<script type="text/javascript" src="js/classie.js"></script>
+
+<!--[if lt IE 9]>
+    <script src="js/respond-1.1.0.min.js"></script>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/html5element.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+	$(document).ready(function(e) {
+        $('.res-nav_click').click(function(){
+		$('ul.toggle').slideToggle(600)	
+			});	
+			
+	$(document).ready(function() {
+$(window).bind('scroll', function() {
+         if ($(window).scrollTop() > 0) {
+             $('#header_outer').addClass('fixed');
+         }
+         else {
+             $('#header_outer').removeClass('fixed');
+         }
+    });
+	
+	  });
+	  
+
+		    });	
+function resizeText() {
+	var preferredWidth = 767;
+	var displayWidth = window.innerWidth;
+	var percentage = displayWidth / preferredWidth;
+	var fontsizetitle = 25;
+	var newFontSizeTitle = Math.floor(fontsizetitle * percentage);
+	$(".divclass").css("font-size", newFontSizeTitle)
+}
+</script>
+</head>
+<body>
+
+<!--Header_section-->
+<header id="header_outer">
+  <div class="container">
+    <div class="header_section">
+      <div class="logo"><a href="index.html"><img src="img/logob.png" alt=""></a></div>
+      <nav class="nav" id="nav">
+        <ul class="toggle">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="design.html">Design</a></li>
+          <li><a href="optimize.html">Optimize</a></li>
+          <li><a href="maintain.html">Maintenance</a></li>
+          <li><a href="latest.html">Latest Work</a></li>
+          <li><a href="tutorials.html">Tutorials</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <ul class="">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="design.html">Design</a></li>
+          <li><a href="optimize.html">Optimize</a></li>
+          <li><a href="maintain.html">Maintenance</a></li>
+          <li><a href="latest.html">Latest Work</a></li>
+          <li><a href="tutorials.html">Tutorials</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="res-nav_click animated wobble wow"  href="javascript:void(0)"><i class="fa-bars"></i></a> </div>
+  </div>
+</header>
+<!--Header_section--> 
+
+
+
+
+<section id="window_function"><!--main-section-start-->
+<div class="container">
+    <h2>JSON in PostgreSQL</h2>
+    </div>
+  </div>
+</section>
+<!--main-section-end--> 
+
+<!--Service-->
+<section  id="service">
+  <div class="container">
+    <p>
+    
+    <a href=http://www.JSON.org>JSON</a> (Javascript Object Notation) is a data type supported in PostgreSQL which lets you store semi-structured or unstructured data in a table, and allows for greater flexibility for applications and support for nosql like features. Currently, there are two JSON data types in PostgreSQL: JSON and JSONB. In this tutorial we will look at the difference between them, and see how we can create, extract, update, and delete from a JSON/JSONB type of object or array. The examples were put together on PostgreSQL 9.5.2. 
+    
+</p><br><p>
+<a class="anchor" name="back_to_contents"></a>
+    <b>Contents</b>
+    <br>
+    <a href="#json_jsonb">What is the difference between JSON and JSONB data type?</a>
+    <br>
+    <a href="#array_object">What is the difference between a JSONB object and JSONB array?</a>
+    <br>
+    <a href="#extract_jsonb">How to select values from a JSONB object or array?</a>
+    <br>
+    <a href="#compare_jsonb">How to find if one JSONB object contains another?</a>
+    <br>
+    <a href="#exist_jsonb">How to find if a particular key is present in a JSON object?</a>
+    <br>
+  
+    <a href="#allkey_jsonb">How to find all keys in a JSONB object?</a>
+    <br>
+    <a href="#concate_jsonb">How to concatenate two JSONB objects or arrays?</a>
+    <br>
+    <a href="#delete_jsonb">How to delete an element from a JSONB object or array?</a>
+    <br>
+
+    <a href="#deletenull_jsonb">How to delete any key:value pair from a JSONB object where the value is NULL?</a>    
+    <br>
+    <a href="#update_jsonb">How to update a key:value pair in JSONB?</a>
+    <br>
+
+
+    <a href="#length_jsonb">How to find length of a JSONB array?</a>
+    <br>
+
+   
+    <a href="#type_jsonb">How to find the element type in a JSONB object</a>
+    <br>
+   
+    <a href="#pretty_jsonb">How to pretty print a JSONB object with proper indentation?</a>
+    <br>
+    <a href="#table_jsonb">How to expand data from JSONB object or array as a table?</a>
+    <br>
+    <a href="#record_jsonb">How to create a record from a JSONB array or object?</a>
+    <br>
+    <a href="#other_jsonb">How to create JSONB object or array from other data types?</a>
+    <br>
+    <a href="#index_jsonb">How to create index in a JSONB column?</a>    
+
+</p><br><p>
+<a class="anchor" name="json_jsonb"></a>
+    <b><a href="#json_jsonb">What is the difference between JSON and JSONB data type?</a>  |  <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    In PostgreSQL JSONB data type has some differences with the JSON data type:
+    <br>
+    - JSONB is more efficient: it stores data in binary format, which it has to convert from the input text during the initial insertion, but afterwards it no longer requires to reparse the text 
+    <br>
+    - JSONB has more functions than JSON in PostgreSQL
+    <br>
+
+    - JSONB supports indexing in PostgreSQL
+    <br>
+    - JSONB removes white spaces from the input text
+    <br>
+    - JSONB removes duplicates by selecting the last value of a duplicate key
+</p><br><p>
+
+
+    Since JSONB has more features than JSON, we will mainly look at the JSONB functions, as PostgreSQL official <a href=https://www.postgresql.org/docs/9.5/static/datatype-json.html>documentation</a> also states JSONB is the preferred data type. In many cases (but not all), JSON has similar functions with similar behaviour. Please take a look of full list of JSON & JSONB <a href=https://www.postgresql.org/docs/9.5/static/functions-json.html>functions</a> in the official documentation.
+</p>
+    
+<br><p>
+<a class="anchor" name="array_object"></a>
+    <b><a href="#array_object">What is the difference between a JSONB object and JSONB array?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+
+</p><br><p>
+    JSONB object begins with curly braces that contains key:value pairs. For example: '{"id": "123", "name": "Roger"}'::jsonb. 
+    <br>
+    JSON Array starts with array brackets and contains a list of items. For example: '["id", "name"]'::jsonb. 
+    Depending on your application, you may prefer one type over another. 
+</p><br><p>
+<a class="anchor" name="extract_jsonb"></a>
+    <b><a href="#extract_jsonb">How to select values from a JSONB object or array?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    There are several operators and functions that can be used to extract value from a JSON/JSONB object/array. We can use '->' operator to find the value of a specific key in JSON/JSONB object/array or use '->>' to find the same value in text format. Similarly, we can use '#>' operator to find the value at specific path in JSON/JSONB object/array or use '#>>' to find the same value in text format. Let us look at a couple of examples. Let's start with a JSONB object:
+    </p>
+    <p>
+    <pre><code>
+    with obj as (
+        select '{"id": "123",
+             "name": "Roger",
+             "tags": ["sports", "not-for-profit"],
+             "address": {
+                     "street_number": "123",
+                     "street_name": "abc street",
+                     "city": "disneyland"}}'::jsonb as jsonb_object
+    )
+    select 
+        jsonb_object -> 'id' as "id as JSON",
+        jsonb_object ->> 'id' as "id as text",
+        jsonb_object #> '{address, city}' as "city as JSON",
+        jsonb_object #>> '{address, city}' as "city as text"
+    from 
+        obj;
+    </code></pre>
+<br>
+    <pre><code>
+     id as JSON | id as text | city as JSON | city as text
+    ------------+------------+--------------+--------------
+     "123"      | 123        | "disneyland" | disneyland
+    (1 row)
+    </code></pre>
+    As we can see from the above example, we were able to extract the value of a particular key using the '->' or '->>' operators, or value at certain path using '#>' or '#>>' operators. 
+
+</p><br><p>
+    Now let us look at a JSONB array. The operators work similarly to JSONB objects, you just have to specify the position instead of the key. 
+    <pre><code>     
+    with arr as (
+        select '[{"id": "123"},
+             {"name": "Roger"},
+             {"tags": ["sports", "not-for-profit"]},
+             {"address": {
+                     "street_number": "123",
+                     "street_name": "abc street",
+                     "city": "disneyland"}}]'::jsonb as jsonb_array
+    )
+    select 
+        jsonb_array -> 0 as "1st element as JSON",
+        jsonb_array ->> 0 as "1st element as text",
+        jsonb_array -> 0 -> 'id' as "access internal element (id)"
+
+    from 
+        arr;
+    </code></pre>
+    <br>
+    <pre><code>
+
+     1st element as JSON | 1st element as text | access internal element (id)
+    ---------------------+---------------------+------------------------------
+     {"id": "123"}       | {"id": "123"}       | "123"
+    (1 row)
+</code></pre>
+
+</p><br><p>
+    There are also two functions which does the same thing, json_extract_path() & json_extract_path_text(). The difference between them is one returns the result as JSON whereas as the other returns the result as text. 
+</p><br><p>
+    Here are some examples:
+     
+    <pre><code>
+    select json_extract_path('{"id": "123", "name": {"first": "Roger", "last": "federer"}}', 'name'); 
+    --> {"first": "Roger", "last": "federer"}
+        </code></pre>
+    
+    <br>
+        
+    <pre><code>
+    select json_extract_path_text('{"id": "123", "name": {"first": "Roger", "last": "federer"}}', 'name'); 
+    --> {"first": "Roger", "last": "federer"}
+    </code></pre>
+
+</p><br><p>
+<a class="anchor" name="compare_jsonb"></a>
+    <b><a href="#compare_jsonb">How to find if one JSONB object contains another?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    There are a few operators that can be used to compare two JSONB objects or arrays. We can use '@>' which returns true if the left side object contains the right side object. We can use '<@', which returns true if the right side object contains the left side object. 
+</p><br><p>
+    A few examples hopefully will make it a bit clear.
+        
+    <pre><code>
+    select '{"id": "123", "name": "Roger"}'::jsonb @> '{"name": "Roger"}'::jsonb;
+    --> returns true, as the left side contains the right side 
+    </code></pre>
+    <br>
+    <pre><code>
+    select '{"name": "Roger"}'::jsonb <@ '{"id": "123", "name": "Roger"}'::jsonb;
+    --> returns true, as the right side contains the left side
+    </code></pre>
+</p><br><p>
+<a class="anchor" name="exist_jsonb"></a>
+    <b><a href="#exist_jsonb">How to find if a particular key is present in a JSON object?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use '?' operator, which returns true if the key is present at the top level in a JSONB object. There is also '?|', which returns true if any of the keys on the right side is present in the left side object, and '?&', which returns true if all of the right side keys are present in the left side object. 
+
+    <pre><code>
+    select '{"id": "123", "name": "Roger"}'::jsonb ? 'id';
+    --> returns true, as the right side string exist as key in the left side object 
+        </code></pre>
+        <br>
+    <pre><code>
+    select '{"id": "123", "name": "Roger"}'::jsonb ? 'city';
+    --> returns false, as the right side string does not exist as key in the left side object 
+    </code></pre>
+    
+    <br>
+        <pre><code>
+    select '{"id": "123", "name": "Roger"}'::jsonb ?| array['id', 'city'];
+    --> returns true, as one of the right side strings is present as key in the left side object
+    </code></pre>
+    <br>
+        <pre><code>
+    select '{"id": "123", "name": "Roger"}'::jsonb ?& array['id', 'city'];
+    --> returns false, as not both right side string are present in the left side object 
+    </code></pre>
+</p><br><p>
+    
+    
+<a class="anchor" name="allkey_jsonb"></a>
+    <b><a href="#allkey_jsonb">How to find all keys in a JSONB object?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+    
+</p><br><p>
+    We can use the function json_object_keys() to find all the top level keys in a JSONB object. 
+    
+    <pre><code>
+    postgres_tutorial=# select json_object_keys('{"id": "123", "name": {"first": "Roger", "last": "federer"}}');k
+
+     json_object_keys
+    ------------------
+     id
+     name
+    (2 rows)
+    </code></pre>
+    
+</p><br><p>
+
+
+   <a class="anchor" name="concate_jsonb"></a> 
+    <b><a href="#concate_jsonb">How to concatenate two JSONB objects or arrays?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+    </p><br><p>
+    We can use '||' operator to concatente two JSONB objects or arrays. 
+</p><br><p>
+    For example:
+        
+    <pre><code>
+    select '{"id": "123"}'::jsonb || '{"name": "Roger"}'::jsonb; 
+    --> {"id": "123", "name": "Roger"} 
+    --> output is the concatenation of the two objects. 
+    </code></pre>
+    
+        <pre><code>
+    select '[{"id": "123"}, {"name": "Roger"}]'::jsonb || '[{"sport": "tennis"}]'::jsonb; 
+    --> [{"id": "123"}, {"name": "Roger"}, {"sport": "tennis"}]
+    </code></pre>
+
+    </p><br><p>
+
+    <a class="anchor" name="delete_jsonb"></a>
+    <b><a href="#delete_jsonb">How to delete an element from a JSONB object or array?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use '-' operator to delete an element from a JSONB object or array. For JSONB object, we need to specify the 'key' for the key:value pair that we want to delete. For JSONB array, we need to specifiy the position of the element.
+</p><br><p>  
+    Let us take a look at a couple of examples:
+
+        <pre><code>
+    select '{"id": "123", "name": "Roger"}'::jsonb - 'name' 
+    --> {"id": "123"}, removed the 'name' key:value pair
+    </code></pre>
+    <br>
+        <pre><code>
+    select '["id", "name"]'::jsonb - 1 
+    --> ["id"], removed the second element (position starts from 0)
+    </code></pre>
+    </p><br><p>
+    We can also use '#-' operator to delete an element at certain path, which works for both JSONB object and array. 
+
+    <pre><code>
+    select '{"id": "123", "name": {"first": "Roger", "last": "federer"}}'::jsonb #- '{name, last}';
+    --> {"id": "123", "name": {"first": "Roger"}}
+    --> removed key/value pair from the specified path, example for a JSONB object
+    </code></pre>
+    <br>
+        <pre><code>
+    select '[{"id": "123"}, {"name": "Roger"}]'::jsonb #- '{0, id}' --> [{}, {"name": "Roger"}];
+    --> removed element from the specified path (position)
+    --> example for a JSONB array, please note that the position starts from 0
+    </code></pre>
+    <br>
+        <pre><code>
+    select '[{"id": "123"}, {"name": "Roger"}]'::jsonb #- '{1, name}';
+    --> [{"id": "123"}, {}]
+    --> another example of deleting from a JSONB array.
+    </code></pre>
+    
+        
+    
+    <br>
+        <pre><code>
+    select '[{"name": [{"first": "Roger"}, {"last": "federer"}]}, "id"]'::jsonb #- '{0, name}';
+    --> [{}, "id"]
+    --> yet another example for deleting from a JSONB array
+    </code></pre>
+    
+</p><br><p>
+<a class="anchor" name="deletenull_jsonb"></a>
+    <b><a href="#deletenull_jsonb">How to delete any key:value pair from a JSONB object where the value is NULL?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use the function jsonb_strip_nulls to delete any entry where the value is null. 
+    
+    <pre><code>
+    postgres_tutorial=# select jsonb_strip_nulls('[{"id": null}, {"name": "Roger"}]');
+        jsonb_strip_nulls
+    -------------------------
+     [{}, {"name": "Roger"}]
+    (1 row)
+    </code></pre>
+     
+</p><br><p>
+    <a class="anchor" name="update_jsonb"></a>
+    <b><a href="#update_jsonb">How to update a key:value pair in JSONB?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use jsonb_set() function to update the value of a key:value pair in a JSONB object. 
+</p><br><p>
+    For example, to update the name of the following JSONB object, we can use:
+
+        <pre><code>
+    select jsonb_set('{"id": "123", "name": {"first": "Roger", "last": "federer"}}', '{name, last}', '"Nadal"');
+    --> {"id": "123", "name": {"last": "Nadal", "first": "Roger"}}
+    --> Please observe that the 'last' key:value pair appeared before 'first', as unlike array JSON/JSONB objects do not care about relative position. 
+    </code></pre>
+    </p><br><p>
+    Similarly, we can update a JSONB array as below by specifying the position:
+
+        <pre><code>
+    select jsonb_set('[{"id":123, "name":"Roger"}]', '{0,name}', '"Rafael"');
+    --> [{"id": 123, "name": "Rafael"}]
+    --> it updated the value of the key 'name'
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_set('[{"id":123}, {"name":"Roger"}]', '{1,name}', '"Rafael"');
+    --> [{"id": 123}, {"name": "Rafael"}]
+    --> it updated the value of the key 'name'
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_set('[{"id":123}, {"name":"Roger"}]', '{0,name}', '"Rafael"');
+    --> [{"id": 123, "name": "Rafael"}, {"name": "Roger"}]
+    </code></pre>
+    
+        
+    Something to observe in the example above, because there was no key called 'name' in the first element, it created a new one. 
+    </p><br><p>
+    If you don't want to create a new entry if it doesn't exist while updating, use the flag 'false' as below:
+
+        <pre><code>
+    select jsonb_set('[{"id":123}, {"name":"Roger"}]', '{0,name}', '"Rafael"', false);
+    --> [{"id": 123}, {"name": "Roger"}]
+    --> no change, as there is no key called 'name' in the first element. 
+    </code></pre>
+
+
+    </p><br><p>
+
+   
+    <a class="anchor" name="length_jsonb"></a>
+    <b><a href="#length_jsonb">How to find length of a JSONB array?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+    
+</p><br><p>
+    We can use jsonb_array_length() function to find the size of a JSONB array. There is no similar function for JSONB object. 
+
+        <pre><code>
+    select * from jsonb_array_length('[{"id": "123"}, {"name": "Roger"}]'); 
+    --> 2
+    </code></pre>
+    </p><br><p>
+
+
+
+<a class="anchor" name="type_jsonb"></a>    
+    <b><a href="#type_jsonb">How to find the element type in a JSONB object</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can find the type of the top elements in a JSONB object or array using the function jsonb_typeof(). For example: 
+        <pre><code>
+    select jsonb_typeof('{"id": "123", "name": {"first": "Roger", "last": "federer"}}'); 
+    --> object
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_typeof('[{"id": "123"}, {"name": "Roger"}]'); 
+    --> array
+    </code></pre>
+        
+    <br>
+        <pre><code>
+    select json_typeof('[1, 2, 3, 4]'); 
+    --> array
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_typeof('123'); 
+    --> number
+    </code></pre>
+    
+</p><br><p>
+<a class="anchor" name="pretty_jsonb"></a>    
+    <b><a href="#pretty_jsonb">How to pretty print a JSONB object with proper indentation?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use jsonb_pretty() function to indent the output format. 
+    
+        <pre><code>
+    postgres_tutorial=# select jsonb_pretty('{"id": "123", "name": {"first": "Roger", "last": "federer"}}');
+            jsonb_pretty
+    ----------------------------
+     {                         +
+         "id": "123",          +
+         "name": {             +
+             "last": "federer",+
+             "first": "Roger"  +
+         }                     +
+     }
+    (1 row)
+
+    </code></pre>
+    
+</p><br><p>
+
+
+
+<a class="anchor" name="table_jsonb"></a>    
+    <b><a href="#table_jsonb">How to expand data from JSONB object or array as a table?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use json_each() function to extract the key: value as a table in (text, json) format or json_each_text() to expand the same in (text, text) format from a JSONB object. 
+
+    <pre><code>
+    postgres_tutorial=# select * from jsonb_each('{"id":"123", "name":"Roger"}');
+     key  |  value
+    ------+---------
+     id   | "123"
+     name | "Roger"
+    (2 rows)
+    </code></pre>
+    <br>
+        <pre><code>
+    postgres_tutorial=# select * from jsonb_each_text('{"id":"123", "name":"Roger"}');
+     key  | value
+    ------+-------
+     id   | 123
+     name | Roger
+    (2 rows)
+    </code></pre>
+    </p><br><p>
+    Similarly, we can use jsonb_array_elements() and jsonb_array_elements_text() to extract elements of a JSONB array as each row. 
+    
+        <pre><code>
+    postgres_tutorial=# select * from jsonb_array_elements('[{"id": "123"}, {"name": "Roger"}]');
+           value
+    -------------------
+     {"id": "123"}
+     {"name": "Roger"}
+    (2 rows)
+    </code></pre>
+    <br>
+    <pre><code>
+    postgres_tutorial=# select * from jsonb_array_elements_text('[{"id": "123"}, {"name": "Roger"}]');
+           value
+    -------------------
+     {"id": "123"}
+     {"name": "Roger"}
+    (2 rows)
+    </code></pre>
+    
+
+</p><br><p>
+
+
+
+<a class="anchor" name="record_jsonb"></a>    
+    <b><a href="#record_jsonb">How to create a record from a JSONB array or object?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can create a record from a JSONB object using the function jsonb_to_record(). Something to remember we need to explicitly define the type of record. 
+
+        <pre><code>
+    postgres_tutorial=# select * from jsonb_to_record('{"id": "123", "name": {"first": "Roger", "last": "federer"}}') as temp(id text, name text);
+     id  |                 name
+    -----+---------------------------------------
+     123 | {"last": "federer", "first": "Roger"}
+    (1 row)
+    </code></pre>
+    </p><br><p>
+    Similarly, we can use the function jsonb_to_recordset() to convert a JSONB array to record. 
+    
+        <pre><code>
+    postgres_tutorial=# select * from jsonb_to_recordset('[{"id": "123"}, {"name": "Roger"}]') as temp(id text, name text);
+     id  | name
+    -----+-------
+     123 |
+         | Roger
+    (2 rows)
+
+     </code></pre>   
+</p><br><p>
+<a class="anchor" name="other_jsonb"></a>    
+    <b><a href="#other_jsonb">How to create JSONB object or array from other data types?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+    We can use to_json() or to_jsonb() function to convert a text, int or JSON into a JSONB. 
+
+        <pre><code>
+    select to_jsonb('test');
+    --> ERROR:  could not determine polymorphic type because input has type "unknown"
+    </code></pre>
+    <br>
+        <pre><code>
+    select to_jsonb('test'::text);
+    --> "test"
+    </code></pre>
+    <br>
+        <pre><code>
+    select to_jsonb(1); 
+    --> 1
+    </code></pre>
+    <br>
+        <pre><code>
+    select to_jsonb('test string "1'::text); 
+    --> "test string \"1" 
+    </code></pre>
+    <br>
+        <pre><code>
+    select to_jsonb(to_json('test'::text)); 
+    --> "test"
+    --> can convert from JSON to JSONB
+    </code></pre>
+    </p><br><p>
+    We can use array_to_json() to convert an array to a JSON array. You can specify the type to determine how the key value will be cast into. Please note there is no array_to_jsonb() function. 
+
+        <pre><code>
+    select array_to_json('{{1,2},{3,4}}'::int[]); 
+    --> [[1,2],[3,4]]
+    </code></pre>
+    <br>
+        <pre><code>
+    select array_to_json('{{1,2},{3,4}}'::text[]); 
+    --> [["1","2"],["3","4"]]
+    </code></pre>
+    </p><br><p>
+    We can use row_to_json() to return an input row as a JSON object. It adds keys as f1, f2 etc. For example:
+
+        <pre><code>
+    select row_to_json(row('a','b'));  
+    --> {"f1":"a","f2":"b"} 
+    </code></pre>
+</p><br><p>
+    There are a couple of variadic functions, jsonb_build_array() & jsonb_build_object(), which can take variable number of arguments. The arguments can be of heterogenous types and they are interpreted as key1, value1, key2, value2 etc.The input for jsonb_build_object() must have even number of arguments (but jsonb_build_array() can have odd number of arguments) for obvious reasons.  
+
+        <pre><code>
+    select jsonb_build_array(1, 2, 3, 'a', 'b', 'c'); 
+    --> [1, 2, 3, "a", "b", "c"]
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_build_array(1, 2, 3, 'a', 'b');
+    -->  [1, 2, 3, "a", "b"]
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_build_object(1, 2, 3, 'a', 'b', 'c'); 
+    --> {"1" : 2, "3" : "a", "b" : "c"}
+    </code></pre>
+    <br>
+        <pre><code>
+    select jsonb_build_object(1, 2, 3, 'a', 'b'); 
+    --> ERROR:  argument list must have even number of elements
+    --> jsonb_build_object() needs to have an even number of arguments, as the arguments are mapped as key -> value. 
+    </code></pre>
+    </p><br><p>
+    There is another function called jsonb_object() which builds JSON/JSONB objects from a one dimensional even numbered input text array. It is similar to jsonb_build_object() except, in jsonb_build_object(), there can be variable number of inputs, whereas in jsonb_object() the input is a text which contains even number of elements. An example will hopefully make it clearer:
+
+    <pre><code>
+    select json_object('{1, 2, 3, "a", "b", "c"}');
+    --> {"1" : "2", "3" : "a", "b" : "c"}
+    --> {"1" : "2", "3" : "a", "b" : "c"}
+    --> one dimensional even numbered text array
+    </code></pre>
+    <br>
+   
+        <pre><code>
+    select json_object('{1, a}', '{b, c}'); 
+    --> {"1" : "b", "a" : "c"}
+    --> two dimensional where inner array has two elements
+    </code></pre>
+</p><br><p>
+<a class="anchor" name="index_jsonb"></a> 
+    <b><a href="#index_jsonb">How to create index in a JSONB column?</a> | <a href="#back_to_contents">Back to Contents</a></b>
+</p><br><p>
+We can use GIN indexes to index a JSONB data type, which supports '@>', '?', '?&', '?|' operators using json_ops which is the default method. 
+<pre><code>
+create index on schema.tablename using gin(jsonb_column json_ops);
+</code></pre>
+<br>
+If you find the size of the index a bit large, and in your query, if you mostly use '@>' operator, you can use json_path_ops instead, which only supports the '@>' operator and are substantially smaller. 
+<pre><code>
+create index on schema.tablename using gin(jsonb_column json_path_ops);
+</code></pre>    
+</p><br><br>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  
+  
+<div style="display: none; height: 100px;">Tag: PostgreSQL 9.1, PostgreSQL 9.2, PostgreSQL 9.3, PostgreSQL 9.4, PostgreSQL 9.5, database, SQL, Window Functions, Window Functions, Window Functions, Window Functions, Window Functions, lag(), lead(), first_value(), last_value(), nth_value(), rank(), row_number(), dense_rank(), percent_rank(), cume_dist() </div>  
+  
+</section>
+<!--Service-->
+
+
+
+
+
+
+
+<footer class="footer_section" id="contact">
+  <div class="container">
+    <section class="main-section contact" id="contact">
+      <div class="contact_section">
+        <h2>Contact Us</h2>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="contact_block">
+              <div class="contact_block_icon rollIn animated wow"><span><i class="fa-home"></i></span></div>
+              <span> 420 Voyaguer Dr, <br>
+              Prince George, BC V2M 4P2<br> Canada </span> </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="contact_block">
+              <div class="contact_block_icon icon2 rollIn animated wow"><span><i class="fa-phone"></i></span></div>
+              <span> 1 604 787 1757 </span> </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="contact_block">
+              <div class="contact_block_icon icon3 rollIn animated wow"><span><i class="fa-pencil"></i></span></div>
+              <span> <a href="mailto:info@sequelled.com"> info@sequelled.com</a> </span> </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 wow fadeInLeft">
+          <div class="contact-info-box address clearfix">
+            <h3>Don’t be shy. Say hello!</h3>
+            <p>Please feel free to contact us to discuss how we can solve your needs regarding PostgreSQL databases and get a free quote.</p>
+            
+          </div>
+          <ul class="social-link">
+            <li class="twitter animated bounceIn wow delay-02s"><a href="javascript:void(0)"><i class="fa-twitter"></i></a></li>
+            <li class="facebook animated bounceIn wow delay-03s"><a href="javascript:void(0)"><i class="fa-facebook"></i></a></li>
+            <li class="pinterest animated bounceIn wow delay-04s"><a href="javascript:void(0)"><i class="fa-pinterest"></i></a></li>
+            <li class="gplus animated bounceIn wow delay-05s"><a href="javascript:void(0)"><i class="fa-google-plus"></i></a></li>
+            <li class="dribbble animated bounceIn wow delay-06s"><a href="javascript:void(0)"><i class="fa-dribbble"></i></a></li>
+          </ul>
+        </div>
+        <div class="col-lg-6 wow fadeInUp delay-06s">
+       
+          <form id="contactform" method="POST">
+            <input class="input-text animated wow flipInY delay-02s" type="text" name="name" placeholder="Your name *">
+            <input class="input-text animated wow flipInY delay-02s" type="email" name="_replyto" placeholder="Your email *">
+            <input type="hidden" name="_subject" value="Website contact" />
+            <textarea class="input-text text-area animated wow flipInY delay-06s" name="message" placeholder="Your message *"></textarea>
+            <input type="text" name="_gotcha" style="display:none" />
+            <input class="input-btn animated wow flipInY delay-08s" type="submit" value="Send">
+            <input type="hidden" name="_next" value="//sequelled.com#contact" />
+        </form>
+        <script>
+            var contactform =  document.getElementById('contactform');
+            contactform.setAttribute('action', '//formspree.io/' + 'info' + '@' + 'sequelled' + '.' + 'com');
+        </script>
+          
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="container">
+    <div class="footer_bottom"> <span>Copyright © 2016 sequelled.com | <a href="http://bootstraptaste.com/"> BootstrapTaste </a></span> </div>
+    <!-- 
+        All links in the footer should remain intact. 
+        Licenseing information is available at: http://bootstraptaste.com/license/
+        You can buy this theme without footer links online at: http://bootstraptaste.com/buy/?theme=Butterfly
+    -->
+  </div>
+</footer>
+
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        $('#header_outer').scrollToFixed();
+        $('.res-nav_click').click(function(){
+            $('.main-nav').slideToggle();
+            return false    
+            
+        });
+        
+    });
+</script> 
+<script>
+    wow = new WOW(
+      {
+        animateClass: 'animated',
+        offset:       100
+      }
+    );
+    wow.init();
+    document.getElementById('').onclick = function() {
+      var section = document.createElement('section');
+      section.className = 'wow fadeInDown';
+	  section.className = 'wow shake';
+	  section.className = 'wow zoomIn';
+	  section.className = 'wow lightSpeedIn';
+      this.parentNode.insertBefore(section, this);
+    };
+  </script> 
+<script type="text/javascript">
+	$(window).load(function(){
+		
+		$('a').bind('click',function(event){
+			var $anchor = $(this);
+			
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top - 91
+			}, 1500,'easeInOutExpo');
+			
+			if you don't want to use the easing effects:
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top
+			}, 1000);
+			
+			event.preventDefault();
+		});
+	})
+</script> 
+
+<!--<script type="text/javascript">
+
+$(window).load(function(){
+  
+  
+  var $container = $('.portfolioContainer'),
+      $body = $('body'),
+      colW = 350,
+      columns = null;
+
+  
+  $container.isotope({
+    // disable window resizing
+    resizable: true,
+    masonry: {
+      columnWidth: colW
+    }
+  });
+  
+  $(window).smartresize(function(){
+    // check if columns has changed
+    var currentColumns = Math.floor( ( $body.width() -30 ) / colW );
+    if ( currentColumns !== columns ) {
+      // set new column count
+      columns = currentColumns;
+      // apply width to container manually, then trigger relayout
+      $container.width( columns * colW )
+        .isotope('reLayout');
+    }
+    
+  }).smartresize(); // trigger resize to set container width
+  $('.portfolioFilter a').click(function(){
+        $('.portfolioFilter .current').removeClass('current');
+        $(this).addClass('current');
+ 
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+			
+            filter: selector,
+         });
+         return false;
+    });
+  
+});
+
+</script>
+
+
+--> 
+
+<script type="text/javascript">
+
+   
+  jQuery(document).ready(function($){     
+// Portfolio Isotope
+	var container = $('#portfolio-wrap');	
+	
+
+	container.isotope({
+		animationEngine : 'best-available',
+	  	animationOptions: {
+	     	duration: 200,
+	     	queue: false
+	   	},
+		layoutMode: 'fitRows'
+	});	
+
+	$('#filters a').click(function(){
+		$('#filters a').removeClass('active');
+		$(this).addClass('active');
+		var selector = $(this).attr('data-filter');
+	  	container.isotope({ filter: selector });
+        setProjects();		
+	  	return false;
+	});
+		
+		
+		function splitColumns() { 
+			var winWidth = $(window).width(), 
+				columnNumb = 1;
+			
+			
+			if (winWidth > 1024) {
+				columnNumb = 4;
+			} else if (winWidth > 900) {
+				columnNumb = 2;
+			} else if (winWidth > 479) {
+				columnNumb = 2;
+			} else if (winWidth < 479) {
+				columnNumb = 1;
+			}
+			
+			return columnNumb;
+		}		
+		
+		function setColumns() { 
+			var winWidth = $(window).width(), 
+				columnNumb = splitColumns(), 
+				postWidth = Math.floor(winWidth / columnNumb);
+			
+			container.find('.portfolio-item').each(function () { 
+				$(this).css( { 
+					width : postWidth + 'px' 
+				});
+			});
+		}		
+		
+		function setProjects() { 
+			setColumns();
+			container.isotope('reLayout');
+		}		
+		
+		container.imagesLoaded(function () { 
+			setColumns();
+		});
+		
+	
+		$(window).bind('resize', function () { 
+			setProjects();			
+		});
+
+});
+$( window ).load(function() {
+	jQuery('#all').click();
+	return false;
+});
+
+
+</script>
+</body>
+</html>
